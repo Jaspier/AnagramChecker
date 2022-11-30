@@ -12,6 +12,7 @@ public class Main {
         Anagram anagram = new LettersOnly();
         Scanner scanner = new Scanner(System.in);
 
+        System.out.println("--------- Anagram Checker ---------");
         System.out.println("Enter username");
         String username = scanner.nextLine();
         System.out.println("Enter first word");

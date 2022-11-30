@@ -1,24 +1,30 @@
 package AnagramChecker.cache;
 
+import org.apache.log4j.Logger;
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
 public class FileWR {
 
-    private File file = new File("cache.txt");
-    private Map<String, String> cache = new HashMap<String, String>();
+    final static String path = "/Users/allendungo/Work/AnagramChecker/src/main/resources/cache.txt";
+
+    private final Logger logger = Logger.getLogger(this.getClass());
+
+    private File file = new File(path);
+    private Map<String, String> cache = new HashMap<>();
 
     public FileWR(){
     }
 
     public void CacheHandler(Map<String, String> values){
         createCacheIfNotExists(file);
-        ReadCacheAndUpdate(file, cache);
-        AppendUniqueKeyValueToCache(values, file, cache);
+        ReadStoredCacheAndPopulateLocalInstance(file, cache);
+        AppendUniqueValuesToStoredCache(values, file, cache);
     }
 
-    private static void AppendUniqueKeyValueToCache(Map<String, String> values, File file, Map<String, String> cache) {
+    private void AppendUniqueValuesToStoredCache(Map<String, String> values, File file, Map<String, String> cache) {
         try{
             BufferedWriter bf = new BufferedWriter(new FileWriter(file, true));
             for(Map.Entry<String, String> entry: values.entrySet()){
@@ -31,10 +37,11 @@ public class FileWR {
 
         } catch (IOException e) {
             e.printStackTrace();
+            logger.error("Failed to write to cache", e);
         }
     }
 
-    private static void ReadCacheAndUpdate(File file, Map<String, String> cache) {
+    private void ReadStoredCacheAndPopulateLocalInstance(File file, Map<String, String> cache) {
         try{
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line;
@@ -49,26 +56,25 @@ public class FileWR {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            logger.error("Failed to read or populate cache", e);
         }
     }
 
-    private static void createCacheIfNotExists(File file) {
+    private void createCacheIfNotExists(File file) {
         try{
             if(!file.exists()){
                 file.createNewFile();
             }
         } catch (IOException e) {
             e.printStackTrace();
+            logger.error("Failed to create cache", e);
         }
     }
 
 
     public Map<String, String> getMapFromCache(){
-
         createCacheIfNotExists(file);
-
-        ReadCacheAndUpdate(file, cache);
-
+        ReadStoredCacheAndPopulateLocalInstance(file, cache);
         return cache;
     }
 }
