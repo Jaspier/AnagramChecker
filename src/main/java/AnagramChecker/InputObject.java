@@ -5,6 +5,8 @@ public class InputObject {
     String word1;
     String word2;
 
+    public InputObject() {}
+
     public InputObject(String username, String word1, String word2) {
         this.username = username;
         this.word1 = word1;

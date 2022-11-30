@@ -1,75 +1,87 @@
 package AnagramChecker.anagrams;
 
 import AnagramChecker.InputObject;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class LettersOnlyTest {
 
+    private InputObject inputObject;
+    private Anagram anagram;
+
+    @BeforeEach
+    void setUp() {
+        inputObject = new InputObject();
+        anagram = new LettersOnly();
+    }
+
+    @AfterEach
+    void tearDown() {
+        inputObject = null;
+        anagram = null;
+    }
+
     @Test
     public void givenValidInput_WhenRan_ThenTestShouldPass() {
-        Anagram anagram = new LettersOnly();
-
-        InputObject inputObject = new InputObject("allen", "finder", "friend");
-        InputObject inputObject2 = new InputObject("allen", "cat", "act");
-        InputObject inputObject3 = new InputObject("allen", "bag", "gab");
-
+        inputObject = new InputObject("allen", "finder", "friend");
         Assertions.assertTrue(anagram.checkWords(inputObject));
-        Assertions.assertTrue(anagram.checkWords(inputObject2));
-        Assertions.assertTrue(anagram.checkWords(inputObject3));
+
+        inputObject = new InputObject("allen", "cat", "act");
+        Assertions.assertTrue(anagram.checkWords(inputObject));
+
+        inputObject = new InputObject("allen", "bag", "gab");
+        Assertions.assertTrue(anagram.checkWords(inputObject));
     }
 
     @Test
     public void givenValidInputWithCapitalLetters_WhenRan_ThenTestShouldPass() {
-        Anagram anagram = new LettersOnly();
-
-        InputObject inputObject = new InputObject("allen", "FinDer", "FriEnd");
-        InputObject inputObject2 = new InputObject("allen", "Cat", "acT");
-        InputObject inputObject3 = new InputObject("allen", "baG", "gAb");
-
+        inputObject = new InputObject("allen", "FinDer", "FriEnd");
         Assertions.assertTrue(anagram.checkWords(inputObject));
-        Assertions.assertTrue(anagram.checkWords(inputObject2));
-        Assertions.assertTrue(anagram.checkWords(inputObject3));
+
+        inputObject = new InputObject("allen", "Cat", "acT");
+        Assertions.assertTrue(anagram.checkWords(inputObject));
+
+        inputObject = new InputObject("allen", "baG", "gAb");
+        Assertions.assertTrue(anagram.checkWords(inputObject));
     }
 
     @Test
     public void givenInvalidInputWithDigits_WhenRan_ThenTestShouldFail() {
-        Anagram anagram = new LettersOnly();
-
-        InputObject inputObject = new InputObject("allen", "fin1der", "fri1end");
-        InputObject inputObject2 = new InputObject("allen", "ca5t", "ac5t");
-        InputObject inputObject3 = new InputObject("allen", "ba7g", "ga7b");
-
+        inputObject = new InputObject("allen", "fin1der", "fri1end");
         Assertions.assertFalse(anagram.checkWords(inputObject));
-        Assertions.assertFalse(anagram.checkWords(inputObject2));
-        Assertions.assertFalse(anagram.checkWords(inputObject3));
+
+        inputObject = new InputObject("allen", "ca5t", "ac5t");
+        Assertions.assertFalse(anagram.checkWords(inputObject));
+
+        inputObject = new InputObject("allen", "ba7g", "ga7b");
+        Assertions.assertFalse(anagram.checkWords(inputObject));
     }
 
     @Test
     public void givenInvalidInputWithSpecialChars_WhenRan_ThenTestShouldFail() {
-        Anagram anagram = new LettersOnly();
-
-        InputObject inputObject = new InputObject("allen", "find@er", "friend@");
-        InputObject inputObject2 = new InputObject("allen", "cat$", "t%ac");
-        InputObject inputObject3 = new InputObject("allen", "b&ag", "gab&");
-
+        inputObject = new InputObject("allen", "find@er", "friend@");
         Assertions.assertFalse(anagram.checkWords(inputObject));
-        Assertions.assertFalse(anagram.checkWords(inputObject2));
-        Assertions.assertFalse(anagram.checkWords(inputObject3));
+
+        inputObject = new InputObject("allen", "cat$", "t%ac");
+        Assertions.assertFalse(anagram.checkWords(inputObject));
+
+        inputObject = new InputObject("allen", "b&ag", "gab&");
+        Assertions.assertFalse(anagram.checkWords(inputObject));
     }
 
     @Test
     public void givenInvalidInputWithSpaces_WhenRan_ThenTestShouldFail() {
-        Anagram anagram = new LettersOnly();
-
-        InputObject inputObject = new InputObject("allen", "finder ", "friend");
-        InputObject inputObject2 = new InputObject("allen", "cat ", "act  ");
-        InputObject inputObject3 = new InputObject("allen", " bag", "gab");
-
+        inputObject = new InputObject("allen", "finder ", "friend");
         Assertions.assertFalse(anagram.checkWords(inputObject));
-        Assertions.assertFalse(anagram.checkWords(inputObject2));
-        Assertions.assertFalse(anagram.checkWords(inputObject3));
+
+        inputObject = new InputObject("allen", "cat ", "act  ");
+        Assertions.assertFalse(anagram.checkWords(inputObject));
+
+        inputObject = new InputObject("allen", " bag", "gab");
+        Assertions.assertFalse(anagram.checkWords(inputObject));
     }
 }

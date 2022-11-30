@@ -1,2 +1,5 @@
 finder:friend-allen
 ross:sors-bob
+cat:act-allen
+bag:gab-allen
+gas:sag-allen
